@@ -38,11 +38,11 @@
                 var l = window.location
                 const ajax = new XMLHttpRequest()
 
-                ajax.onreadystatechange(function(){
+                ajax.onreadystatechange = function(){
                     if (this.readyState == 4 && this.status == 200){
                         replaceDocument(this.responseText)
                     }
-                })
+                }
 
                 ajax.open("GET", source + l.pathname)
                 ajax.send()
