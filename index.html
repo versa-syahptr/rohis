@@ -8,7 +8,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Web rohis reborn</title>
-        <style type="text/css">
+        <!-- <style type="text/css">
             body, html
             {
                 margin: 0; padding: 0; height: 100%; overflow: hidden;
@@ -18,7 +18,7 @@
             {
                 position:absolute; left: 0; right: 0; bottom: 0; top: 0px; 
             }
-        </style>
+        </style> -->
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="">
@@ -27,14 +27,41 @@
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <div id="content">
+        <!-- <div id="content">
             <iframe width="100%" height="100%" frameborder="0" id="main" src=""></iframe>
-        </div>
+        </div> -->
         <script>
             var source = "https://versa.ptangsana.co.id/rohis"
+            var dest = "https://rohislabscib.netlify.app"
+
             window.onload = () => {
                 var l = window.location
-                document.getElementById("main").src = source + l.pathname + l.hash
+                const ajax = new XMLHttpRequest()
+
+                ajax.onreadystatechange(function(){
+                    if (this.readyState == 4 && this.status == 200){
+                        replaceDocument(this.responseText)
+                    }
+                })
+
+                ajax.open("GET", source + l.pathname)
+                ajax.send()
+            }
+            
+            function replaceDocument(html){
+                var doc = document.implementation.createHTMLDocument()
+                doc.documentElement.innerHTML = html
+                var anchor = doc.getElementsByTagName('a')
+                for (let i = 0; i < anchor.length; i++){
+                    var obj = anchor[i]
+                    if (obj.href.startsWith(source)){
+                        anchor[i].href = obj.href.replace(source, dest)
+                        console.log(anchor[i].href)
+                    }
+                }
+                // anything below this line will be unreachable
+                document.documentElement.innerHTML = doc.documentElement.innerHTML
+
             }
         </script>
     </body>
