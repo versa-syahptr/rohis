@@ -27,26 +27,38 @@
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <!-- <div id="content">
-            <iframe width="100%" height="100%" frameborder="0" id="main" src=""></iframe>
-        </div> -->
+        <div id="content">
+            <iframe width="100%" height="100%" frameborder="0" id="mainframe" src=""></iframe>
+        </div>
         <script>
             var source = "https://versa.ptangsana.co.id/rohis"
             var dest = "https://rohislabscib.netlify.app"
 
-            window.onload = () => {
-                var l = window.location
-                const ajax = new XMLHttpRequest()
-
-                ajax.onreadystatechange = function(){
-                    if (this.readyState == 4 && this.status == 200){
-                        replaceDocument(this.responseText)
-                    }
-                }
-
-                ajax.open("GET", source + l.pathname)
-                ajax.send()
+            function messageHandler(e){
+                let l = e.data
+                alert(l.pathname)
             }
+
+            window.addEventListener("message", messageHandler)
+
+            window.onload = () => {
+                let frame = document.getElementById("mainframe")
+                frame.src = source + location.pathname
+            }
+
+            // window.onload = () => {
+            //     var l = window.location
+            //     const ajax = new XMLHttpRequest()
+
+            //     ajax.onreadystatechange = function(){
+            //         if (this.readyState == 4 && this.status == 200){
+            //             replaceDocument(this.responseText)
+            //         }
+            //     }
+
+            //     ajax.open("GET", source + l.pathname)
+            //     ajax.send()
+            // }
             
             function replaceDocument(html){
                 var doc = document.implementation.createHTMLDocument()
@@ -62,7 +74,7 @@
                 // anything below this line will be unreachable
                 document.documentElement.innerHTML = doc.documentElement.innerHTML
 
-            }
+            }   
         </script>
     </body>
 </html>
