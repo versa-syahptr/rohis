@@ -38,10 +38,9 @@
                 console.log("got a message")
                 let data = e.data
                 document.title = data.title
-                if (data.path != "/") {
-                    console.log(data.path)
-                    history.pushState({},  data.title, data.path)
-                }
+                console.log(data.path)
+                history.pushState({},  data.title, data.path)
+                
             }
 
             window.onload = () => {
