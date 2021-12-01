@@ -8,7 +8,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Web rohis reborn</title>
-        <!-- <style type="text/css">
+        <style type="text/css">
             body, html
             {
                 margin: 0; padding: 0; height: 100%; overflow: hidden;
@@ -18,7 +18,7 @@
             {
                 position:absolute; left: 0; right: 0; bottom: 0; top: 0px; 
             }
-        </style> -->
+        </style>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="">
@@ -35,13 +35,17 @@
             var dest = "https://rohislabscib.netlify.app"
 
             function messageHandler(e){
-                let l = e.data
-                alert(l.pathname)
+                console.log("got a message")
+                let data = e.data
+                document.title = data.title
+                if (data.path != "/") {
+                    console.log(data.path)
+                    history.pushState({},  data.title, data.path)
+                }
             }
 
-            window.addEventListener("message", messageHandler)
-
             window.onload = () => {
+                window.addEventListener("message", messageHandler)
                 let frame = document.getElementById("mainframe")
                 frame.src = source + location.pathname
             }
